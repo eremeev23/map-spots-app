@@ -1,32 +1,39 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <v-app>
+    <BaseHeader />
+    <v-main>
+      <router-view />
+    </v-main>
+    <BaseLoader v-if="loading" />
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { mapActions, mapMutations, mapState } from 'vuex'
+import BaseHeader from "./components/base/BaseHeader.vue";
+import BaseLoader from "./components/base/BaseLoader.vue";
 
-nav {
-  padding: 30px;
+export default {
+  name: "App",
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  components: {
+    BaseHeader,
+    BaseLoader
+  },
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+  computed: {
+    ...mapState({
+      loading: state => state.loading
+    })
+  },
+
+  methods: {
+    ...mapMutations(["setActiveMarker"]),
+    ...mapActions(["getMarkers"]),
+  },
+
+  created() {
+    this.getMarkers();
+  },
+};
+</script>

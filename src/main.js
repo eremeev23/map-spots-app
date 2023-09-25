@@ -1,12 +1,22 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import Vue from "vue";
+import Toast from "vue-toastification";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import vuetify from "./plugins/vuetify";
+import yandexMap from "./plugins/yandex-map";
+import "./assets/styles/index.scss";
+import "vue-toastification/dist/index.css";
 
-Vue.config.productionTip = false
+Vue.use(Toast);
+
+Vue.config.productionTip = false;
 
 new Vue({
+  yandexMap,
   router,
   store,
-  render: h => h(App)
-}).$mount('#app')
+  vuetify,
+  Toast,
+  render: (h) => h(App),
+}).$mount("#app");
